@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orientación Vocacional DSI | IESTP Carlos Salazar Romero</title>
+    <title>DSI: El Arquitecto Digital | IESTP Carlos Salazar Romero</title>
+    <meta name="description" content="Descubre tu perfil vocacional en Desarrollo de Sistemas de Información.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -17,452 +24,532 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        dsi: {
-                            dark: '#0f172a',
-                            card: '#1e293b',
-                            cyan: '#06b6d4',
-                            gold: '#fbbf24',
-                            accent: '#3b82f6'
+                        brand: {
+                            yellow: '#FACD2A',    // Botones, acentos brillantes
+                            blue: '#4E57BA',      // Encabezados, primario
+                            brightBlue: '#2A3CFA',// Hover, llamadas a la acción
+                            olive: '#A69453',     // Bordes sutiles
+                            darkBlue: '#52557A',  // Tarjetas oscuras
+                            darkGrey: '#4F4C42',  // Texto principal
+                            bg: '#FDFBF7'         // Blanco Antiguo (Fondo)
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'pulse-glow': 'pulseGlow 2s infinite',
+                        'float': 'float 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 5px #FACD2A, 0 0 10px #FACD2A' },
+                            '50%': { boxShadow: '0 0 20px #FACD2A, 0 0 30px #FACD2A' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        /* Efectos personalizados */
-        .glass-panel {
-            background: rgba(30, 41, 59, 0.7);
+        /* Estilos personalizados para efectos avanzados */
+        body {
+            background-color: #FDFBF7;
+            color: #4F4C42;
+        }
+
+        /* Efecto de borde dorado circulante */
+        .btn-tech-gold {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .btn-tech-gold::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(250, 205, 42, 0.4), transparent);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+        .btn-tech-gold:hover::before {
+            left: 100%;
+        }
+        
+        /* Vidrio Tecnológico */
+        .glass-tech {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(78, 87, 186, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-glass {
+            background: rgba(82, 85, 122, 0.95);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(250, 205, 42, 0.2);
+            color: white;
         }
-        .text-glow {
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+
+        /* Scroll Reveal Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
         }
-        .gold-glow {
-            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
-        details > summary {
-            list-style: none;
+
+        /* Tipografía Tech */
+        .text-gradient {
+            background: linear-gradient(to right, #4E57BA, #2A3CFA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        details > summary::-webkit-details-marker {
-            display: none;
+        
+        /* Grid Background sutil */
+        .grid-bg {
+            background-image: radial-gradient(#A69453 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.15;
         }
     </style>
 </head>
-<body class="bg-dsi-dark text-slate-300 font-sans selection:bg-dsi-cyan selection:text-dsi-dark">
+<body class="antialiased overflow-x-hidden">
 
-    <nav class="fixed w-full z-50 glass-panel border-b border-slate-700">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fa-solid fa-microchip text-dsi-cyan text-2xl animate-pulse"></i>
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3 glass-tech px-4 py-2 rounded-full">
+                <i class="fa-solid fa-code text-brand-brightBlue text-xl"></i>
                 <div>
-                    <h1 class="font-bold text-white leading-none tracking-tighter">DSI PRODIGIO</h1>
-                    [cite_start]<p class="text-xs text-dsi-cyan font-mono">IESTP Carlos Salazar Romero [cite: 423]</p>
+                    <h1 class="font-bold text-brand-blue leading-none tracking-tight">DSI <span class="text-brand-brightBlue">PRODIGIO</span></h1>
                 </div>
             </div>
-            <a href="#checklist-final" class="hidden md:block bg-dsi-cyan hover:bg-cyan-400 text-slate-900 font-bold py-2 px-6 rounded-full transition-all transform hover:scale-105 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
-                Matricúlate 2026
+            <a href="#admision" class="hidden md:block bg-brand-yellow text-brand-darkGrey font-bold py-2 px-6 rounded-full shadow-lg hover:shadow-brand-yellow/50 transition-all transform hover:-translate-y-1 border border-brand-olive/20 btn-tech-gold">
+                Admisión 2026
             </a>
         </div>
     </nav>
 
-    <header class="relative pt-32 pb-20 overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-20">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-dsi-dark"></div>
-            <div class="w-full h-full" style="background-image: radial-gradient(#3b82f6 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <header class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-brand-blue/60 mix-blend-multiply z-10"></div> <div class="absolute inset-0 bg-gradient-to-t from-brand-bg via-transparent to-black/30 z-10"></div> <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-80 scale-105">
+                <source src="video_dsi_hero.mp4" type="video/mp4">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop" alt="DSI Tech Background" class="w-full h-full object-cover">
+            </video>
         </div>
 
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-slate-800 border border-dsi-cyan text-dsi-cyan text-xs font-mono mb-6">
-                [cite_start]CICLO PREPARATORIO 2026 [cite: 424]
-            </span>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
-                THE ARCHITECT OF <span class="text-transparent bg-clip-text bg-gradient-to-r from-dsi-cyan to-blue-500 text-glow">HIS OWN CODE</span>
+        <div class="container mx-auto px-6 relative z-20 text-center mt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-brand-yellow/50 bg-black/40 backdrop-blur-md text-brand-yellow font-mono text-xs mb-6 animate-float">
+                <span class="w-2 h-2 rounded-full bg-brand-yellow animate-pulse"></span>
+                CICLO PREPARATORIO 2026
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white mb-6 tracking-tight drop-shadow-lg">
+                EL ARQUITECTO <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-white">DE TU PROPIO CÓDIGO</span>
             </h1>
-            <p class="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto mb-10 font-light">
-                No eliges una carrera, eliges un personaje. [cite_start]Bienvenido al "Modo Historia" de tu vida profesional. [cite: 429-430]
+            
+            <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-10 font-light leading-relaxed drop-shadow-md">
+                No eliges una carrera, eliges un personaje. Bienvenido al "Modo Historia" de tu vida profesional.
+                Deja de ser un usuario (NPC) y conviértete en creador.
             </p>
 
-            <div class="relative max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.15)] border border-slate-700 group">
-                <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all z-10 pointer-events-none flex items-center justify-center">
-                    <i class="fa-solid fa-play text-white/50 text-6xl group-hover:opacity-0 transition-opacity"></i>
-                </div>
-                <video class="w-full h-auto object-cover" controls poster="https://via.placeholder.com/1920x1080/0f172a/06b6d4?text=Cargando+Video+IA...">
-                    <source src="video_dsi_intro.mp4" type="video/mp4">
-                    Tu navegador no soporta video HTML5.
-                </video>
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                <button onclick="document.getElementById('diagnostico').scrollIntoView({behavior: 'smooth'})" class="group bg-brand-yellow text-brand-darkGrey font-bold py-4 px-10 rounded-full shadow-[0_0_20px_rgba(250,205,42,0.4)] hover:shadow-[0_0_30px_rgba(250,205,42,0.6)] transition-all transform hover:scale-105 btn-tech-gold flex items-center gap-3 border-2 border-white/20">
+                    <i class="fa-solid fa-play text-brand-brightBlue group-hover:animate-spin-slow"></i>
+                    INICIAR DIAGNÓSTICO
+                </button>
+                <button onclick="document.getElementById('malla').scrollIntoView({behavior: 'smooth'})" class="px-8 py-4 rounded-full border border-white/30 text-white hover:bg-white/10 backdrop-blur-sm transition-all font-mono text-sm">
+                    VER MAPA DEL TESORO
+                </button>
             </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce text-white/50">
+            <i class="fa-solid fa-chevron-down text-2xl"></i>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 md:px-6 py-10 space-y-24">
+    <main class="relative z-10">
+        <div class="absolute inset-0 grid-bg pointer-events-none z-[-1]"></div>
 
-        <section id="diagnostico" class="max-w-4xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white mb-4"><span class="text-dsi-cyan">01.</span> El Diagnóstico</h2>
-                <div class="h-1 w-20 bg-dsi-cyan mx-auto rounded"></div>
+        <section id="diagnostico" class="py-24 container mx-auto px-6 reveal">
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-blue mb-4">La Verdad Sobre Elegir</h2>
+                <div class="h-1 w-24 bg-brand-yellow mx-auto rounded-full mb-6"></div>
+                <p class="text-lg text-brand-darkGrey leading-relaxed">
+                    La mayoría elige por inercia. La ciencia sugiere la <strong>Alineación Cognitiva</strong>.
+                    No buscamos "genios matemáticos", buscamos mentes que vean el mundo como un sistema de causas y efectos.
+                </p>
             </div>
+
+            <div class="grid md:grid-cols-3 gap-8 text-left">
+                <div class="glass-tech p-8 rounded-2xl border-t-4 border-brand-brightBlue hover:-translate-y-2 transition-transform duration-300 shadow-xl">
+                    <div class="w-12 h-12 bg-brand-brightBlue/10 rounded-lg flex items-center justify-center mb-4 text-brand-brightBlue text-2xl">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-darkBlue">Arte y Psicología</h3>
+                    <p class="text-sm opacity-80">Diseñar experiencias humanas (UI/UX). Que la tecnología se sienta humana.</p>
+                </div>
+                <div class="glass-tech p-8 rounded-2xl border-t-4 border-brand-blue hover:-translate-y-2 transition-transform duration-300 shadow-xl">
+                    <div class="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center mb-4 text-brand-blue text-2xl">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-darkBlue">Ingeniería Lógica</h3>
+                    <p class="text-sm opacity-80">Construir estructuras robustas (Backend). Los cimientos del mundo digital.</p>
+                </div>
+                <div class="glass-tech p-8 rounded-2xl border-t-4 border-brand-yellow hover:-translate-y-2 transition-transform duration-300 shadow-xl">
+                    <div class="w-12 h-12 bg-brand-yellow/20 rounded-lg flex items-center justify-center mb-4 text-brand-olive text-2xl">
+                        <i class="fa-solid fa-chess"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-2 text-brand-darkBlue">Estrategia</h3>
+                    <p class="text-sm opacity-80">Resolver problemas reales. Gestión de negocios y emprendimiento.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-brand-darkBlue text-white relative overflow-hidden reveal">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-brand-brightBlue/20 rounded-full blur-3xl -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-yellow/10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="text-center mb-12">
+                    <span class="text-brand-yellow font-mono text-sm tracking-widest">ALINEACIÓN COGNITIVA</span>
+                    <h2 class="text-4xl font-bold mt-2">Test: "El Código Fuente"</h2>
+                    <p class="text-gray-300 mt-2">Marca solo lo que sea brutalmente cierto sobre ti.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto" id="test-container">
+                    <div class="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-brand-yellow/50 transition-colors">
+                        <h3 class="font-bold text-brand-yellow mb-1"><i class="fa-solid fa-magnifying-glass mr-2"></i>El Investigador</h3>
+                        <p class="text-xs text-gray-400 font-mono mb-4">THE DEBUGGER</p>
+                        <div class="space-y-4">
+                            <label class="flex gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/30 bg-white/10 checked:border-brand-yellow checked:bg-brand-yellow transition-all" data-type="A">
+                                    <i class="fa-solid fa-check absolute left-1 text-xs text-black opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Me obsesiono por entender las estadísticas o romper las reglas de los juegos.</span>
+                            </label>
+                            <label class="flex gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/30 bg-white/10 checked:border-brand-yellow checked:bg-brand-yellow transition-all" data-type="A">
+                                    <i class="fa-solid fa-check absolute left-1 text-xs text-black opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Investigo por qué falló algo antes de pedir ayuda.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-brand-brightBlue/50 transition-colors">
+                        <h3 class="font-bold text-brand-brightBlue mb-1"><i class="fa-solid fa-pen-nib mr-2"></i>El Artístico</h3>
+                        <p class="text-xs text-gray-400 font-mono mb-4">THE DESIGNER</p>
+                        <div class="space-y-4">
+                            <label class="flex gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/30 bg-white/10 checked:border-brand-brightBlue checked:bg-brand-brightBlue transition-all" data-type="B">
+                                    <i class="fa-solid fa-check absolute left-1 text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Me molesta cuando una app es fea o difícil de usar.</span>
+                            </label>
+                            <label class="flex gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/30 bg-white/10 checked:border-brand-brightBlue checked:bg-brand-brightBlue transition-all" data-type="B">
+                                    <i class="fa-solid fa-check absolute left-1 text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Disfruto creando cosas desde cero (dibujos, videos, mapas).</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 p-6 rounded-xl border border-white/10 hover:border-brand-olive/50 transition-colors">
+                        <h3 class="font-bold text-brand-olive mb-1"><i class="fa-solid fa-cube mr-2"></i>El Convencional</h3>
+                        <p class="text-xs text-gray-400 font-mono mb-4">THE ARCHITECT</p>
+                        <div class="space-y-4">
+                            <label class="flex gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/30 bg-white/10 checked:border-brand-olive checked:bg-brand-olive transition-all" data-type="C">
+                                    <i class="fa-solid fa-check absolute left-1 text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Me gusta organizar mis archivos con un sistema propio.</span>
+                            </label>
+                            <label class="flex gap-3 cursor-pointer group">
+                                <div class="relative flex items-center">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-white/30 bg-white/10 checked:border-brand-olive checked:bg-brand-olive transition-all" data-type="C">
+                                    <i class="fa-solid fa-check absolute left-1 text-xs text-white opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                                </div>
+                                <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Encuentro satisfacción en optimizar tareas.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-10 text-center">
+                    <button onclick="calculateProfile()" class="bg-brand-brightBlue hover:bg-blue-600 text-white font-bold py-3 px-10 rounded-full shadow-lg transition-all transform active:scale-95 border border-white/10">
+                        COMPILAR RESULTADOS <i class="fa-solid fa-terminal ml-2"></i>
+                    </button>
+                    
+                    <div id="test-result" class="hidden mt-8 max-w-2xl mx-auto dark-glass p-8 rounded-2xl animate-pulse-glow">
+                        <h4 class="text-2xl font-bold text-brand-yellow mb-2" id="result-title"></h4>
+                        <p class="text-gray-200 text-lg" id="result-desc"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 container mx-auto px-6">
             
-            <div class="glass-panel p-8 rounded-2xl shadow-xl">
-                <h3 class="text-2xl font-bold text-white mb-4">La Verdad Sobre Elegir</h3>
-                <p class="mb-4 text-lg">La mayoría elige por inercia ("NPC Mode"). [cite_start]La ciencia sugiere la <strong class="text-dsi-cyan">Alineación Cognitiva</strong>[cite: 433].</p>
-                <div class="bg-slate-800/50 p-6 rounded-lg border-l-4 border-amber-500 mb-6">
-                    [cite_start]<h4 class="font-bold text-amber-400 mb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Mito del Sótano [cite: 436]</h4>
-                    <p class="text-sm">Borra la imagen del hacker solitario. DSI es un deporte de equipo que combina: 
-                        <span class="text-white font-semibold">Arte (UI/UX)</span>, 
-                        <span class="text-white font-semibold">Ingeniería (Backend)</span> y 
-                        [cite_start]<span class="text-white font-semibold">Estrategia (Negocios)</span> [cite: 438-441].</p>
+            <div class="max-w-4xl mx-auto mb-24 reveal">
+                <div class="bg-brand-darkGrey text-white rounded-xl overflow-hidden shadow-2xl border border-brand-olive/30">
+                    <div class="bg-black/40 px-6 py-3 flex items-center justify-between">
+                        <div class="flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-brand-yellow"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="font-mono text-xs text-gray-400">logica_algoritmica.ts</span>
+                    </div>
+                    <div class="p-8 font-mono">
+                        <p class="text-brand-yellow mb-2">// RETO: Optimización de Servidores</p>
+                        <p class="mb-1 text-gray-300">const totalProcesadores = 45;</p>
+                        <p class="mb-1 text-gray-300">const energiaTotal = 480; // Watts</p>
+                        <p class="mb-4 text-gray-300">const consumo = { tipoA: 12, tipoB: 8 };</p>
+                        <p class="text-brand-brightBlue mb-6">>> Calcular cantidad de cada tipo para balancear la carga...</p>
+                        
+                        <div class="relative group">
+                            <button onclick="this.nextElementSibling.classList.toggle('hidden')" class="text-sm border border-brand-yellow text-brand-yellow px-4 py-2 rounded hover:bg-brand-yellow hover:text-black transition-colors">
+                                > EJECUTAR SOLUCIÓN
+                            </button>
+                            <div class="hidden mt-4 p-4 bg-black/30 rounded border-l-4 border-brand-brightBlue animate-float">
+                                <p class="text-gray-300 text-sm">
+                                    <span class="text-purple-400">let</span> x = TipoA; <span class="text-purple-400">let</span> y = TipoB;<br>
+                                    x + y = 45;<br>
+                                    12x + 8y = 480;<br>
+                                    <br>
+                                    <span class="text-green-400">>> Resultado: 30 Tipo A, 15 Tipo B.</span>
+                                </p>
+                                <p class="mt-2 text-xs text-brand-yellow">Si tu mente separó las variables automáticamente, tienes PENSAMIENTO ALGORÍTMICO.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-brand-blue">Plan Odisea: Tu Futuro en 3 Versiones</h2>
+                    <p class="text-brand-darkGrey">Design Thinking aplicado a tu vida.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-gray-400 hover:shadow-xl transition-all">
+                        <div class="text-gray-400 text-4xl mb-4"><i class="fa-solid fa-user-clock"></i></div>
+                        <h3 class="font-bold text-xl text-brand-darkGrey mb-2">1. La Inercia</h3>
+                        <p class="text-sm text-gray-600">Un empleo estable de 8am a 6pm. Administrativo. ¿Te emociona o te da sueño?</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-brand-brightBlue hover:shadow-xl transition-all">
+                        <div class="text-brand-brightBlue text-4xl mb-4"><i class="fa-solid fa-robot"></i></div>
+                        <h3 class="font-bold text-xl text-brand-darkGrey mb-2">2. Reinvención</h3>
+                        <p class="text-sm text-gray-600">La IA automatiza lo básico. Te conviertes en quien controla y repara a la tecnología.</p>
+                    </div>
+                    <div class="bg-brand-darkBlue text-white p-8 rounded-2xl shadow-lg border-l-4 border-brand-yellow relative overflow-hidden transform hover:-translate-y-2 transition-all">
+                        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-brand-yellow/20 rounded-full blur-xl"></div>
+                        <div class="text-brand-yellow text-4xl mb-4"><i class="fa-solid fa-globe"></i></div>
+                        <h3 class="font-bold text-xl text-brand-yellow mb-2">3. Modo Dios</h3>
+                        <p class="text-sm text-gray-300">Libertad total. Creas startups, proteges ciber-bancos o trabajas remoto desde cualquier lugar.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="test-riasec" class="max-w-5xl mx-auto scroll-mt-24">
-            <div class="text-center mb-10">
-                <h2 class="text-3xl font-bold text-white"><span class="text-dsi-cyan">02.</span> Test: "El Código Fuente"</h2>
-                [cite_start]<p class="text-slate-400 mt-2">Marca solo lo que sea brutalmente cierto sobre ti. [cite: 442]</p>
-            </div>
+        <section id="malla" class="py-24 bg-brand-blue/5 relative reveal">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="text-3xl font-bold text-brand-blue text-center mb-10">Tu Mapa de Entrenamiento</h2>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="glass-panel p-6 rounded-xl hover:border-dsi-cyan transition-colors group">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center mx-auto text-blue-400 mb-3 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="space-y-4">
+                    <details class="group bg-white rounded-xl shadow-md overflow-hidden border border-brand-blue/10">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors list-none">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-blue text-white flex items-center justify-center font-bold text-xl">1</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-brand-darkBlue">El Arquitecto (Año 1)</h3>
+                                    <p class="text-sm text-brand-olive font-medium">Logro: Junior Tech Support</p>
+                                </div>
+                            </div>
+                            <span class="text-brand-blue transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-6 border-t border-gray-100 bg-gray-50">
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-code text-brand-brightBlue mt-1"></i> <span><strong>Lógica de Programación:</strong> Aprender a pensar como máquina.</span></li>
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-palette text-purple-500 mt-1"></i> <span><strong>UI/UX:</strong> Diseño de interfaces que enamoran.</span></li>
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-network-wired text-green-600 mt-1"></i> <span><strong>Soporte y Redes:</strong> Entender la infraestructura física.</span></li>
+                            </ul>
                         </div>
-                        <h3 class="font-bold text-white">Bloque A: Investigador</h3>
-                        [cite_start]<p class="text-xs text-slate-500 font-mono">The Debugger [cite: 444]</p>
-                    </div>
-                    <div class="space-y-3">
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-dsi-cyan" data-type="A">
-                            [cite_start]<span class="text-sm">Me obsesiono por entender las estadísticas o romper las reglas de los juegos. [cite: 446]</span>
-                        </label>
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-dsi-cyan" data-type="A">
-                            [cite_start]<span class="text-sm">Investigo por qué falló algo antes de pedir ayuda. [cite: 447]</span>
-                        </label>
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-dsi-cyan" data-type="A">
-                            [cite_start]<span class="text-sm">Prefiero la verdad lógica a una mentira amable. [cite: 449]</span>
-                        </label>
-                    </div>
-                </div>
+                    </details>
 
-                <div class="glass-panel p-6 rounded-xl hover:border-pink-500 transition-colors group">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 bg-pink-900/50 rounded-full flex items-center justify-center mx-auto text-pink-400 mb-3 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-pen-nib"></i>
+                    <details class="group bg-white rounded-xl shadow-md overflow-hidden border border-brand-blue/10">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors list-none">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-brightBlue text-white flex items-center justify-center font-bold text-xl">2</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-brand-darkBlue">El Constructor (Año 2)</h3>
+                                    <p class="text-sm text-brand-olive font-medium">Logro: Junior Developer</p>
+                                </div>
+                            </div>
+                            <span class="text-brand-blue transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-6 border-t border-gray-100 bg-gray-50">
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-mobile-screen text-brand-brightBlue mt-1"></i> <span><strong>Móviles:</strong> Apps nativas con GPS y sensores.</span></li>
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-database text-brand-yellow mt-1"></i> <span><strong>Base de Datos:</strong> SQL y Big Data.</span></li>
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-brands fa-github text-black mt-1"></i> <span><strong>Herramientas:</strong> Git y metodologías ágiles.</span></li>
+                            </ul>
                         </div>
-                        <h3 class="font-bold text-white">Bloque B: Artístico</h3>
-                        [cite_start]<p class="text-xs text-slate-500 font-mono">The Designer [cite: 450]</p>
-                    </div>
-                    <div class="space-y-3">
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-pink-500" data-type="B">
-                            [cite_start]<span class="text-sm">Me molesta físicamente cuando una app es fea o difícil de usar. [cite: 452]</span>
-                        </label>
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-pink-500" data-type="B">
-                            [cite_start]<span class="text-sm">Disfruto creando cosas desde cero (dibujos, videos, mapas). [cite: 453]</span>
-                        </label>
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-pink-500" data-type="B">
-                            [cite_start]<span class="text-sm">Visualizo objetos 3D en mi mente con facilidad. [cite: 454]</span>
-                        </label>
-                    </div>
-                </div>
+                    </details>
 
-                <div class="glass-panel p-6 rounded-xl hover:border-emerald-500 transition-colors group">
-                    <div class="text-center mb-4">
-                        <div class="w-12 h-12 bg-emerald-900/50 rounded-full flex items-center justify-center mx-auto text-emerald-400 mb-3 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-cube"></i>
+                    <details class="group bg-white rounded-xl shadow-md overflow-hidden border border-brand-blue/10">
+                        <summary class="flex items-center justify-between p-6 cursor-pointer hover:bg-gray-50 transition-colors list-none">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-yellow text-brand-darkBlue flex items-center justify-center font-bold text-xl">3</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-brand-darkBlue">El Estratega (Año 3)</h3>
+                                    <p class="text-sm text-brand-olive font-medium">Logro: Profesional Técnico</p>
+                                </div>
+                            </div>
+                            <span class="text-brand-blue transition-transform group-open:rotate-180"><i class="fa-solid fa-chevron-down"></i></span>
+                        </summary>
+                        <div class="p-6 border-t border-gray-100 bg-gray-50">
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-shield-halved text-red-500 mt-1"></i> <span><strong>Ciberseguridad:</strong> Hacking Ético y Defensa.</span></li>
+                                <li class="flex items-start gap-3 text-brand-darkGrey"><i class="fa-solid fa-rocket text-purple-600 mt-1"></i> <span><strong>Emprendimiento:</strong> Startups y Negocios Digitales.</span></li>
+                            </ul>
                         </div>
-                        <h3 class="font-bold text-white">Bloque C: Convencional</h3>
-                        [cite_start]<p class="text-xs text-slate-500 font-mono">The Architect [cite: 456]</p>
-                    </div>
-                    <div class="space-y-3">
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-emerald-500" data-type="C">
-                            [cite_start]<span class="text-sm">Me gusta organizar mis archivos con un sistema propio. [cite: 458]</span>
-                        </label>
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-emerald-500" data-type="C">
-                            [cite_start]<span class="text-sm">Encuentro satisfacción en optimizar tareas. [cite: 459]</span>
-                        </label>
-                        <label class="flex items-start gap-3 cursor-pointer">
-                            <input type="checkbox" class="riasec-check mt-1 accent-emerald-500" data-type="C">
-                            [cite_start]<span class="text-sm">Soy detallista, encuentro errores que otros ignoran. [cite: 460]</span>
-                        </label>
-                    </div>
+                    </details>
                 </div>
-            </div>
-
-            <div class="mt-8 text-center">
-                <button onclick="calculateProfile()" class="bg-gradient-to-r from-dsi-cyan to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-8 rounded-full shadow-lg transform active:scale-95 transition-all">
-                    Analizar mi Perfil
-                </button>
-                <div id="test-result" class="hidden mt-6 p-6 glass-panel rounded-xl border border-dsi-cyan/30 animate-fade-in-up">
-                    <h4 class="text-xl font-bold text-dsi-cyan mb-2" id="result-title"></h4>
-                    <p class="text-slate-300" id="result-desc"></p>
-                </div>
-            </div>
-        </section>
-
-        <section class="max-w-4xl mx-auto bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden">
-            <div class="bg-slate-800 px-6 py-4 border-b border-slate-700 flex justify-between items-center">
-                <span class="font-mono text-dsi-gold font-bold"><i class="fa-solid fa-terminal mr-2"></i>RETO_LOGICO.exe</span>
-                <div class="flex gap-2">
-                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                </div>
-            </div>
-            <div class="p-8 font-mono text-sm md:text-base">
-                [cite_start]<p class="mb-4 text-emerald-400">// El Reto: Optimización de Servidores [cite: 475]</p>
-                <p class="mb-2">Total Procesadores: 45</p>
-                <p class="mb-2">Energía Total: 480 Watts</p>
-                <p class="mb-2">Tipo A (Quantum): 12W | Tipo B (Eco): 8W</p>
-                [cite_start]<p class="mb-6 text-slate-400">>> ¿Cuántos procesadores de cada tipo tienes activados? [cite: 479-488]</p>
-                
-                <details class="group">
-                    <summary class="inline-flex items-center gap-2 cursor-pointer text-dsi-cyan hover:text-white transition-colors">
-                        <span class="border border-dsi-cyan px-4 py-2 rounded hover:bg-dsi-cyan/10"> > Ejecutar Solución (Click aquí)</span>
-                    </summary>
-                    <div class="mt-4 p-4 bg-black/50 rounded border-l-2 border-dsi-gold">
-                        <p class="text-slate-300 mb-2">Tu cerebro hizo esto:</p>
-                        <code class="block text-blue-400">
-                            let x = TipoA;<br>
-                            let y = TipoB;<br>
-                            x + y = 45;<br>
-                            12x + 8y = 480;<br>
-                        </code>
-                        <p class="mt-4 text-white font-bold">Resultado: 30 Tipo A y 15 Tipo B.</p>
-                        [cite_start]<p class="text-xs text-slate-500 mt-2">Si separaste variables automáticamente, tienes PENSAMIENTO ALGORÍTMICO. [cite: 501]</p>
-                    </div>
-                </details>
-            </div>
-        </section>
-
-        <section id="odisea" class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-white"><span class="text-dsi-cyan">03.</span> Tu Futuro (Plan Odisea)</h2>
-                [cite_start]<p class="text-slate-400">Design Thinking aplicado a tu vida. [cite: 505]</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="group relative bg-slate-800 rounded-2xl overflow-hidden transition-all hover:-translate-y-2 hover:shadow-2xl">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-slate-500"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-slate-300 mb-2">1. La Inercia</h3>
-                        [cite_start]<p class="text-sm text-slate-500 mb-4">El camino actual [cite: 512]</p>
-                        <p class="text-slate-400 text-sm">Un empleo estable de 8am a 6pm. [cite_start]¿Te emociona o te da sueño? [cite: 516-517]</p>
-                    </div>
-                </div>
-
-                <div class="group relative bg-slate-800 rounded-2xl overflow-hidden transition-all hover:-translate-y-2 hover:shadow-2xl">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-red-500"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-red-400 mb-2">2. Plan B</h3>
-                        [cite_start]<p class="text-sm text-slate-500 mb-4">Reinvención Forzosa [cite: 518]</p>
-                        <p class="text-slate-400 text-sm">La IA reemplaza trabajos básicos. [cite_start]Te conviertes en un solucionador técnico para controlar la tecnología. [cite: 520]</p>
-                    </div>
-                </div>
-
-                <div class="group relative bg-slate-800 rounded-2xl overflow-hidden transition-all hover:-translate-y-2 hover:shadow-2xl ring-1 ring-dsi-gold/50">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-dsi-gold"></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-dsi-gold mb-2">3. Modo Dios</h3>
-                        [cite_start]<p class="text-sm text-slate-500 mb-4">Vida sin restricciones [cite: 524]</p>
-                        <p class="text-slate-400 text-sm">Libertad total. [cite_start]Creas startups, proteges ciber-bancos o diseñas videojuegos desde cualquier país. [cite: 526]</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-10 p-6 glass-panel rounded-xl text-center border border-dsi-cyan/20">
-                [cite_start]<h4 class="text-lg font-bold text-white mb-2">LA REVELACIÓN [cite: 533]</h4>
-                <p class="text-slate-300">DSI es la <span class="text-dsi-cyan font-bold">Meta-Habilidad</span> que habilita los 3 escenarios. [cite_start]Autonomía, Creatividad y Seguridad. [cite: 534]</p>
-            </div>
-        </section>
-
-        <section id="niveles" class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-white text-center mb-10"><span class="text-dsi-cyan">04.</span> Tu Entrenamiento</h2>
-
-            <details class="group mb-4 bg-slate-800 rounded-xl overflow-hidden border border-slate-700 open:border-dsi-cyan transition-colors">
-                <summary class="flex items-center justify-between p-6 cursor-pointer bg-slate-800 hover:bg-slate-750">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">1</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white">El Arquitecto (Año 1)</h3>
-                            [cite_start]<p class="text-sm text-slate-400">Desbloquea: "Junior Tech Support" [cite: 562]</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
-                </summary>
-                <div class="p-6 border-t border-slate-700 bg-slate-900/50">
-                    <ul class="space-y-4 text-slate-300">
-                        <li class="flex gap-3"><i class="fa-solid fa-code text-dsi-cyan mt-1"></i> <div><strong class="text-white">Lógica de Programación:</strong> Aprender a pensar. [cite_start]If-Else, Bucles. [cite: 549]</div></li>
-                        <li class="flex gap-3"><i class="fa-solid fa-palette text-pink-500 mt-1"></i> <div><strong class="text-white">UI/UX:</strong> Ingeniería de la atención. [cite_start]Diseñar interfaces que los humanos quieran tocar. [cite: 556]</div></li>
-                        [cite_start]<li class="flex gap-3"><i class="fa-solid fa-server text-emerald-500 mt-1"></i> <div><strong class="text-white">Soporte y Redes:</strong> Entender la infraestructura y el hardware. [cite: 559]</div></li>
-                    </ul>
-                </div>
-            </details>
-
-            <details class="group mb-4 bg-slate-800 rounded-xl overflow-hidden border border-slate-700 open:border-dsi-cyan transition-colors">
-                <summary class="flex items-center justify-between p-6 cursor-pointer bg-slate-800 hover:bg-slate-750">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-dsi-cyan flex items-center justify-center text-dsi-dark font-bold">2</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white">El Constructor (Año 2)</h3>
-                            [cite_start]<p class="text-sm text-slate-400">Desbloquea: "Junior Developer" [cite: 586]</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
-                </summary>
-                <div class="p-6 border-t border-slate-700 bg-slate-900/50">
-                    <ul class="space-y-4 text-slate-300">
-                        [cite_start]<li class="flex gap-3"><i class="fa-solid fa-mobile-screen text-dsi-cyan mt-1"></i> <div><strong class="text-white">Móviles:</strong> Crear Apps nativas que usan GPS y sensores. [cite: 575]</div></li>
-                        <li class="flex gap-3"><i class="fa-solid fa-database text-yellow-500 mt-1"></i> <div><strong class="text-white">Base de Datos:</strong> Controlar el activo más valioso. [cite_start]SQL y Modelamiento. [cite: 580]</div></li>
-                        <li class="flex gap-3"><i class="fa-brands fa-github text-white mt-1"></i> <div><strong class="text-white">Herramientas:</strong> Git, GitHub y Scrum. [cite_start]Trabajo estilo Silicon Valley. [cite: 583]</div></li>
-                    </ul>
-                </div>
-            </details>
-
-            <details class="group mb-4 bg-slate-800 rounded-xl overflow-hidden border border-slate-700 open:border-dsi-cyan transition-colors">
-                <summary class="flex items-center justify-between p-6 cursor-pointer bg-slate-800 hover:bg-slate-750">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-dsi-gold flex items-center justify-center text-dsi-dark font-bold">3</div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white">El Estratega (Año 3)</h3>
-                            [cite_start]<p class="text-sm text-slate-400">Desbloquea: "Profesional Técnico DSI" [cite: 610]</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-chevron-down text-slate-400 group-open:rotate-180 transition-transform"></i>
-                </summary>
-                <div class="p-6 border-t border-slate-700 bg-slate-900/50">
-                    <ul class="space-y-4 text-slate-300">
-                        [cite_start]<li class="flex gap-3"><i class="fa-solid fa-shield-halved text-red-500 mt-1"></i> <div><strong class="text-white">Ciberseguridad:</strong> Hacking Ético y defensa de sistemas. [cite: 600]</div></li>
-                        [cite_start]<li class="flex gap-3"><i class="fa-solid fa-rocket text-purple-500 mt-1"></i> <div><strong class="text-white">Emprendimiento:</strong> Plan de Negocios Digital y Startups. [cite: 607]</div></li>
-                        [cite_start]<li class="flex gap-3"><i class="fa-solid fa-user-tie text-blue-400 mt-1"></i> <div><strong class="text-white">Gestión:</strong> Liderazgo de proyectos y recursos. [cite: 603]</div></li>
-                    </ul>
-                </div>
-            </details>
-        </section>
-
-        <section class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div class="glass-panel p-8 rounded-2xl">
-                <h3 class="text-2xl font-bold text-white mb-6">Datos del Mercado</h3>
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="text-dsi-cyan font-bold text-lg">Desempleo Negativo</h4>
-                        [cite_start]<p class="text-sm text-slate-400">Hay más puestos vacantes que personas capacitadas. [cite: 616]</p>
-                    </div>
-                    <div>
-                        <h4 class="text-dsi-cyan font-bold text-lg">Escalabilidad</h4>
-                        <p class="text-sm text-slate-400">Tu sueldo sube por habilidades (Stack), no solo por años. [cite_start]Posibilidad de ganar en dólares remotos. [cite: 628-630]</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mt-4">
-                        <span class="px-3 py-1 rounded-full bg-slate-700 text-xs">Bioinformática</span>
-                        <span class="px-3 py-1 rounded-full bg-slate-700 text-xs">Fintech</span>
-                        <span class="px-3 py-1 rounded-full bg-slate-700 text-xs">Agrotech</span>
-                        <span class="px-3 py-1 rounded-full bg-slate-700 text-xs">Gaming</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="glass-panel p-8 rounded-2xl border-t-4 border-slate-600">
-                <h3 class="text-2xl font-bold text-white mb-6">Ciencia (Referencias)</h3>
-                <ul class="space-y-4 text-sm text-slate-400">
-                    <li>
-                        <strong class="text-slate-200">Holland (1997):</strong> Teoría RIASEC. [cite_start]Ajuste persona-ambiente. [cite: 636]
-                    </li>
-                    <li>
-                        <strong class="text-slate-200">Csikszentmihalyi (1990):</strong> Teoría del Flow. [cite_start]Programación como satisfacción profunda. [cite: 640]
-                    </li>
-                    <li>
-                        [cite_start]<strong class="text-slate-200">Stanford Design Lab (2016):</strong> Design Thinking aplicado a la vida. [cite: 643]
-                    </li>
-                    <li>
-                        <strong class="text-slate-200">Dweck (2006):</strong> Growth Mindset. [cite_start]El error es aprendizaje. [cite: 648]
-                    </li>
-                </ul>
             </div>
         </section>
 
     </main>
 
-    <footer id="checklist-final" class="bg-black py-16 border-t border-slate-800">
-        <div class="container mx-auto px-6 text-center max-w-3xl">
-            [cite_start]<h2 class="text-3xl font-bold text-white mb-8">Checklist Final [cite: 651]</h2>
+    <footer id="admision" class="bg-brand-darkBlue text-white pt-20 pb-10 border-t-4 border-brand-yellow relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center max-w-3xl">
+            <h2 class="text-4xl font-bold mb-8 text-brand-yellow">Checklist Final</h2>
             
-            <div class="text-left bg-slate-900 p-8 rounded-2xl mb-10 space-y-4">
-                <div class="flex gap-4">
-                    <i class="fa-regular fa-circle-check text-dsi-gold text-xl"></i>
-                    [cite_start]<p class="text-slate-300">¿Prefieres resolver un problema difícil a hacer una tarea repetitiva? [cite: 653]</p>
+            <div class="bg-black/30 p-8 rounded-2xl mb-12 text-left space-y-4 backdrop-blur-sm border border-brand-blue/30">
+                <div class="flex gap-4 items-center">
+                    <i class="fa-regular fa-circle-check text-brand-yellow text-xl"></i>
+                    <p class="text-lg">¿Prefieres resolver problemas difíciles a tareas repetitivas?</p>
                 </div>
-                <div class="flex gap-4">
-                    <i class="fa-regular fa-circle-check text-dsi-gold text-xl"></i>
-                    [cite_start]<p class="text-slate-300">¿Quieres ser el arquitecto, no solo el habitante? [cite: 654]</p>
+                <div class="flex gap-4 items-center">
+                    <i class="fa-regular fa-circle-check text-brand-yellow text-xl"></i>
+                    <p class="text-lg">¿Quieres ser el arquitecto, no solo el habitante?</p>
                 </div>
-                <div class="flex gap-4">
-                    <i class="fa-regular fa-circle-check text-dsi-gold text-xl"></i>
-                    [cite_start]<p class="text-slate-300">¿Buscas una habilidad a prueba de crisis que viaje contigo? [cite: 655]</p>
+                <div class="flex gap-4 items-center">
+                    <i class="fa-regular fa-circle-check text-brand-yellow text-xl"></i>
+                    <p class="text-lg">¿Buscas una habilidad a prueba de crisis?</p>
                 </div>
             </div>
 
-            <div class="space-y-6">
-                [cite_start]<p class="text-xl text-white font-bold">Si respondiste SÍ, tu perfil está alineado. [cite: 656]</p>
-                <button class="bg-dsi-gold hover:bg-amber-400 text-black font-bold text-xl py-4 px-10 rounded-full shadow-[0_0_20px_rgba(251,191,36,0.5)] transform hover:scale-105 transition-all">
-                    INICIAR INSCRIPCIÓN
-                </button>
-            </div>
-            
-            <div class="mt-16 text-slate-600 text-sm">
-                <p>IESTP "CARLOS SALAZAR ROMERO" - Nuevo Chimbote</p>
+            <h3 class="text-2xl font-bold mb-8">Si respondiste SÍ, tu perfil está alineado.</h3>
+
+            <a href="#" class="inline-block bg-brand-yellow text-brand-darkGrey font-bold text-xl py-5 px-12 rounded-full shadow-[0_0_30px_rgba(250,205,42,0.5)] hover:shadow-[0_0_50px_rgba(250,205,42,0.8)] transform hover:scale-105 transition-all btn-tech-gold border-2 border-white/10">
+                INICIAR INSCRIPCIÓN 2026
+            </a>
+
+            <div class="mt-16 pt-8 border-t border-white/10 text-sm text-gray-400">
+                <p class="mb-2">IESTP "CARLOS SALAZAR ROMERO" | Nuevo Chimbote</p>
                 <p>Programa de Estudios de Desarrollo de Sistemas de Información (DSI)</p>
-                <p class="mt-4 font-mono text-xs opacity-50">Desarrollado con IA Prodigio | 2026</p>
+                <p class="mt-4 font-mono text-xs text-brand-yellow opacity-50">Desarrollado con IA Prodigio</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // --- 1. Lógica del Navbar (Scroll Effect) ---
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-brand-bg/90', 'backdrop-blur-md', 'shadow-md');
+                navbar.classList.remove('py-4');
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('bg-brand-bg/90', 'backdrop-blur-md', 'shadow-md');
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+
+        // --- 2. Lógica Scroll Reveal (Animación al bajar) ---
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+            reveals.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+
+        // --- 3. Lógica del Test RIASEC (TypeScript Logic) ---
         function calculateProfile() {
-            // Obtener checkboxes
-            const checks = document.querySelectorAll('.riasec-check:checked');
+            // Seleccionamos checkboxes
+            const inputs = document.querySelectorAll('input[type="checkbox"]:checked');
+            // Inicializamos contadores (Tipado implícito)
             let counts = { A: 0, B: 0, C: 0 };
 
-            checks.forEach(check => {
-                counts[check.dataset.type]++;
+            inputs.forEach(input => {
+                const type = input.getAttribute('data-type');
+                if(type) counts[type]++;
             });
 
-            [cite_start]// Lógica de Resultados [cite: 463-466]
-            const resultTitle = document.getElementById('result-title');
-            const resultDesc = document.getElementById('result-desc');
             const resultBox = document.getElementById('test-result');
-            
-            resultBox.classList.remove('hidden');
+            const title = document.getElementById('result-title');
+            const desc = document.getElementById('result-desc');
 
-            // Determinar perfil dominante
-            if (counts.A >= 2 && counts.C >= 2 && counts.B >= 2) {
-                resultTitle.innerText = "PERFIL: FULL STACK POTENTIAL";
-                resultDesc.innerText = "Tienes un equilibrio perfecto. Has nacido para esta carrera.";
-                resultTitle.className = "text-xl font-bold text-dsi-gold mb-2 gold-glow";
-            } else if (counts.A >= 2 && counts.C >= 2) {
-                resultTitle.innerText = "PERFIL: ARQUITECTO DE BACKEND";
-                resultDesc.innerText = "Eres el cerebro lógico. Estructura y código puro.";
-                resultTitle.className = "text-xl font-bold text-emerald-400 mb-2";
-            } else if (counts.A >= 2 && counts.B >= 2) {
-                resultTitle.innerText = "PERFIL: FRONTEND / UX DEVELOPER";
-                resultDesc.innerText = "Eres el puente entre el humano y la máquina. Lógica + Arte.";
-                resultTitle.className = "text-xl font-bold text-pink-400 mb-2";
+            // Lógica de determinación
+            let profileName = "";
+            let profileDesc = "";
+            let colorClass = "";
+
+            if (counts.A >= 1 && counts.B >= 1 && counts.C >= 1) {
+                profileName = "PERFIL: FULL STACK POTENTIAL";
+                profileDesc = "Tienes un equilibrio perfecto entre lógica, arte y orden. Has nacido para esta carrera.";
+                colorClass = "text-brand-yellow";
+            } else if (counts.A >= 1 && counts.C >= 1) {
+                profileName = "PERFIL: ARQUITECTO DE BACKEND";
+                profileDesc = "Eres el cerebro lógico. Estructura y código puro son tu fuerte.";
+                colorClass = "text-brand-brightBlue";
+            } else if (counts.A >= 1 && counts.B >= 1) {
+                profileName = "PERFIL: FRONTEND / UX ENGINEER";
+                profileDesc = "Eres el puente entre el humano y la máquina. Lógica + Sensibilidad estética.";
+                colorClass = "text-purple-400";
             } else {
-                resultTitle.innerText = "PERFIL: EXPLORADOR DIGITAL";
-                resultDesc.innerText = "Tienes curiosidad. DSI te ayudará a desarrollar estas habilidades desde cero.";
-                resultTitle.className = "text-xl font-bold text-slate-200 mb-2";
+                profileName = "PERFIL: EXPLORADOR DIGITAL";
+                profileDesc = "Tienes la curiosidad necesaria. DSI te ayudará a desarrollar estas habilidades desde cero.";
+                colorClass = "text-white";
             }
 
-            // Scroll suave al resultado
-            resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // Mostrar resultado
+            title.innerText = profileName;
+            title.className = `text-2xl font-bold mb-2 ${colorClass}`;
+            desc.innerText = profileDesc;
+            
+            resultBox.classList.remove('hidden');
+            resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     </script>
 </body>
